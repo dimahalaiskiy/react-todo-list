@@ -9,7 +9,12 @@ const MakeTodo = () => {
 	const [filteredTodo, setFilteredTodo] = useState([]);
 
 	useEffect(() => {
+		getLocalTodos();
+	}, []);
+
+	useEffect(() => {
 		filteredTodos();
+		saveTodosToLocal();
 	}, [todos, filter]);
 
 	const filteredTodos = () => {
@@ -26,6 +31,19 @@ const MakeTodo = () => {
 		}
 	};
 
+	const saveTodosToLocal = () => {
+		localStorage.setItem('todos', JSON.stringify(todos));
+	};
+
+	const getLocalTodos = () => {
+		if (localStorage.getItem('todos') === null) {
+			localStorage.setItem('todos', JSON.stringify([]));
+		} else {
+			let todoLocal = JSON.parse(localStorage.getItem('todos', JSON.stringify(todos)));
+			setTodos(todoLocal);
+		}
+	};
+
 	const onChangeFilter = (e) => {
 		setFilter(e.target.value);
 	};
@@ -35,6 +53,7 @@ const MakeTodo = () => {
 	};
 
 	const createTodo = (e) => {
+		if (todo === '') return;
 		e.preventDefault();
 		setTodo('');
 		setTodos([...todos, { text: todo, complete: false, id: Math.random() * 1000 }]);

@@ -1,10 +1,10 @@
-import "./App.css";
-import MakeTodo from "./components/CreateTodo/CreateTodo";
+import './App.css';
+import CreateTodo from './Components/CreateTodo/CreateTodo';
 
 function App() {
 	return (
 		<div className='App'>
-			<MakeTodo />
+			<CreateTodo />
 		</div>
 	);
 }
